@@ -2,4 +2,4 @@
 .yardoc/
 doc/
 coverage/
-
+pkg/
