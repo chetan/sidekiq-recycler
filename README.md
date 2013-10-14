@@ -6,6 +6,9 @@ the completion of each job. When the usage surpasses a predefined limit, the pro
 will gracefully terminate. If any jobs are still running beyond a further time threshold,
 they will be killed and requeued.
 
+sidekiq-recycler is best used with a process monitor like god, monit, upstart,
+etc, so that your sidekick process will be properly restarted after it quits.
+
 
 ## Quickstart
 
