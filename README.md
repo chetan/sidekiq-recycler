@@ -32,3 +32,35 @@ Two options are exposed by the middleware:
 
  * mem_limit: RSS usage limit, in megabytes
  * hard_limit_sec: time in seconds to wait for jobs to finish, after graceful shutdown initiated
+
+
+## Kick the tires
+
+You can see the recycler in action by doing the following (requires redis server):
+
+```bash
+git clone https://github.com/chetan/sidekiq-recycler.git
+cd sidekiq-recycler
+bundle exec sidekiq --queue="*" --require ./test/support/workers.rb
+```
+
+And in another terminal:
+
+```bash
+bundle exec test/support/create_jobs.rb
+```
+
+This will spawn some jobs that eat lots of memory and a single jobs which runs forever.
+You should see messages like the following printed on your console:
+
+```
+2013-10-14T18:04:19Z WARN: Recycler threshold reached: 102848 > 100000
+2013-10-14T18:04:19Z WARN: Attempting to stop gracefully
+2013-10-14T18:04:19Z INFO: Shutting down 21 quiet workers
+2013-10-14T18:04:49Z WARN: Hard limit of 30sec reached; sending TERM signal
+2013-10-14T18:04:49Z INFO: Shutting down 0 quiet workers
+2013-10-14T18:04:49Z INFO: Pausing up to 8 seconds to allow workers to finish...
+2013-10-14T18:04:57Z INFO: Still waiting for 3 busy workers
+2013-10-14T18:04:57Z INFO: Pushed 3 messages back to Redis
+2013-10-14T18:04:57Z INFO: All threads stopped; exiting now!
+```
