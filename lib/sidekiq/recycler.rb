@@ -62,7 +62,7 @@ module Sidekiq
           Thread.new do
             # wait for hard limit sec then kill
             sleep hard_limit_sec
-            Sidekiq.logger.warn "Hard limit of #{hard_limit_sec} reached; sending TERM signal"
+            Sidekiq.logger.warn "Hard limit of #{hard_limit_sec}sec reached; sending TERM signal"
             if !launcher.nil? then
               launcher.stop
             else

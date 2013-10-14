@@ -11,4 +11,7 @@ group :development do
   gem "rake"
   gem "jeweler"
   gem "yard"
+  gem "logging"
+  gem "easycov"
+  gem "micron", :github => "chetan/micron"
 end
