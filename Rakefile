@@ -25,6 +25,9 @@ Jeweler::RubygemsDotOrgTasks.new
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
 
+require "micron/rake"
+Micron::Rake.new do
+end
 task :default => :test
 
 require 'yard'

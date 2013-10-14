@@ -22,7 +22,7 @@ GEM
       timers (~> 1.1.0)
     colorize (0.6.0)
     connection_pool (1.1.0)
-    easycov (0.3.1)
+    easycov (0.4.0)
       multi_json
       simplecov
       simplecov-console

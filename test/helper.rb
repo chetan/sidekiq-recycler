@@ -14,9 +14,4 @@ require "micron"
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-EasyCov.path = "coverage"
-EasyCov.filters << EasyCov::IGNORE_GEMS << EasyCov::IGNORE_STDLIB
-EasyCov.filters << lambda { |filename|
-  filename =~ %r(#{EasyCov.root}/test/)
-}
 EasyCov.start
