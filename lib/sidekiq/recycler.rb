@@ -10,7 +10,7 @@ module Sidekiq
 
     def initialize(opts={})
       @mem_limit      = opts[:mem_limit] || 300_000 # default is 300mb
-      @hard_limit_sec = opts[:hard_limit_sec] || 30
+      @hard_limit_sec = opts[:hard_limit_sec] || 300 # default to 300 sec
     end
 
     def call(worker, job, queue)
