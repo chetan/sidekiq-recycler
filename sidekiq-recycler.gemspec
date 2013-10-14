@@ -19,9 +19,11 @@ Gem::Specification.new do |s|
   s.files = [
     "Gemfile",
     "Gemfile.lock",
+    "README.md",
     "Rakefile",
     "VERSION",
     "lib/sidekiq/recycler.rb",
+    "sidekiq-recycler.gemspec",
     "test/helper.rb",
     "test/support/create_jobs.rb",
     "test/support/sidekiq_mock_fetcher.rb",
