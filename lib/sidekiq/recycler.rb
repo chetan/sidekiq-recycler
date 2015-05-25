@@ -11,6 +11,7 @@ module Sidekiq
     def initialize(opts={})
       @mem_limit      = opts[:mem_limit] || 300_000 # default is 300mb
       @hard_limit_sec = opts[:hard_limit_sec] || 300 # default to 300 sec
+      @exit_limit_sec = opts[:exit_limit_sec] || 600 # default to 600 sec
     end
 
     def call(worker, job, queue)
@@ -32,6 +33,7 @@ module Sidekiq
 
           # soft_limit_sec = @soft_limit_sec
           hard_limit_sec = @hard_limit_sec
+          exit_limit_sec = @exit_limit_sec
           launcher = nil
 
           Thread.new do
@@ -60,7 +62,7 @@ module Sidekiq
           end
 
           Thread.new do
-            # wait for hard limit sec then kill
+            # wait for hard limit sec then kill -TERM
             sleep hard_limit_sec
             Sidekiq.logger.warn "Hard limit of #{hard_limit_sec}sec reached; sending TERM signal"
             if !launcher.nil? then
@@ -70,6 +72,12 @@ module Sidekiq
             end
           end
 
+          Thread.new do
+            # wait for exit limit sec then exit(0)
+            sleep exit_limit_sec
+            Sidekiq.logger.warn "Exit limit of #{exit_limit_sec}sec reached; exiting forcely now!"
+            exit
+          end
         end
       end
     end

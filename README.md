@@ -23,7 +23,7 @@ require "sidekiq/recycler"
 
 Sidekiq.configure_server do |config|
   config.server_middleware do |chain|
-    chain.add Sidekiq::Recycler, :mem_limit => 300_000, :hard_limit_sec => 300
+    chain.add Sidekiq::Recycler, :mem_limit => 300_000, :hard_limit_sec => 300, :exit_limit_sec => 600
   end
 end
 ```
@@ -34,8 +34,8 @@ end
 Two options are exposed by the middleware:
 
  * mem_limit: RSS usage limit, in megabytes
- * hard_limit_sec: time in seconds to wait for jobs to finish, after graceful shutdown initiated
-
+ * hard_limit_sec: time in seconds to wait for jobs to finish, after graceful shutdown initiated. Send TERM signal
+ * exit_limit_sec: time in seconds to wait for jobs to finish, after graceful shutdown initiated. Exit forcely.
 
 ## Kick the tires
 
